@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.project.dto.CategoryDTO;
 import com.project.dto.CategoryResponse;
+import com.project.exception.ResourceNotFoundException;
 import com.project.service.CategoryService;
 
 @RestController
@@ -53,7 +54,7 @@ public class CategoryController {
 	
 //	Create a method to get the category:
 	@GetMapping("/{cid}")
-	public ResponseEntity<?> getCategoryById(@PathVariable Integer cid) {
+	public ResponseEntity<?> getCategoryById(@PathVariable Integer cid) throws ResourceNotFoundException {
 		CategoryResponse categoryResponse = categoryService.getCategoryById(cid);
 		
 		if(ObjectUtils.isEmpty(categoryResponse))
@@ -64,7 +65,7 @@ public class CategoryController {
 	
 //	Create a method to delete the category:
 	@DeleteMapping("/{cid}")
-	public ResponseEntity<?> deleteCategory(@PathVariable Integer cid) {
+	public ResponseEntity<?> deleteCategory(@PathVariable Integer cid) throws ResourceNotFoundException {
 		Boolean deleteCategory = categoryService.deleteCategory(cid);
 		
 		if(deleteCategory)

@@ -10,9 +10,11 @@ import org.springframework.util.ObjectUtils;
 
 import com.project.dto.CategoryDTO;
 import com.project.dto.CategoryResponse;
+import com.project.exception.ResourceNotFoundException;
 import com.project.model.Category;
 import com.project.repository.CategoryRepository;
 import com.project.service.CategoryService;
+import com.project.util.Validation;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
@@ -22,9 +24,13 @@ public class CategoryServiceImpl implements CategoryService {
 	
 	@Autowired
 	private ModelMapper modelMapper;
+	
+	@Autowired
+	private Validation validation;
 
 	@Override
 	public Boolean saveCategory(CategoryDTO categoryDTO) {
+		validation.categoryValidation(categoryDTO);
 		Category category = modelMapper.map(categoryDTO, Category.class);
 		Category saveCategory = categoryRepository.save(category);
 		
@@ -44,14 +50,16 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
-	public CategoryResponse getCategoryById(Integer categoryId) {
-		Category category = categoryRepository.findById(categoryId).get();
+	public CategoryResponse getCategoryById(Integer categoryId) throws ResourceNotFoundException {
+		Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException("Category not found with id [" + categoryId +"]"));
 		CategoryResponse categoryResponse = modelMapper.map(category, CategoryResponse.class);
 		return categoryResponse;
 	}
 
 	@Override
-	public Boolean deleteCategory(Integer categoryId) {
+	public Boolean deleteCategory(Integer categoryId) throws ResourceNotFoundException {
+		categoryRepository.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException("Category not found with id [" + categoryId + "]"));
+		
 		categoryRepository.deleteById(categoryId);
 		return true;
 	}
