@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
 import com.project.dto.CategoryDTO;
+import com.project.dto.CategoryResponse;
 import com.project.model.Category;
 import com.project.repository.CategoryRepository;
 import com.project.service.CategoryService;
@@ -35,11 +36,11 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
-	public List<CategoryDTO> getAllCategories() {
-		List<Category> categories = categoryRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
-		List<CategoryDTO> categoryDTOs = categories.stream().map(c -> modelMapper.map(c, CategoryDTO.class)).toList();
+	public List<CategoryResponse> getAllCategories() {
+		List<Category> categories = categoryRepository.findAll(Sort.by(Sort.Direction.DESC, "id")); 
+		List<CategoryResponse> categoryResponse = categories.stream().map(c -> modelMapper.map(c, CategoryResponse.class)).toList();
 		
-		return categoryDTOs;
+		return categoryResponse;
 	}
 
 }

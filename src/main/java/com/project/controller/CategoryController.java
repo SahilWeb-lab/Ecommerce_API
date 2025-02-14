@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.dto.CategoryDTO;
+import com.project.dto.CategoryResponse;
 import com.project.service.CategoryService;
 
 @RestController
@@ -37,7 +38,7 @@ public class CategoryController {
 //	Create a method to get all the categories: ACTIVE & IN ACTIVE BOTH
 	@GetMapping("/")
 	public ResponseEntity<?> getAllCategories() {
-		List<CategoryDTO> categories = categoryService.getAllCategories();
+		List<CategoryResponse> categories = categoryService.getAllCategories();
 		
 		if(CollectionUtils.isEmpty(categories)) 
 			return ResponseEntity.noContent().build();
