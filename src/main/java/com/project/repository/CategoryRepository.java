@@ -6,4 +6,6 @@ import com.project.model.Category;
 
 public interface CategoryRepository extends JpaRepository<Category, Integer> {
 
+	public Boolean existsByTitle(String title);
+	
 }
