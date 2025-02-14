@@ -6,10 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.ObjectUtils;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.dto.CategoryDTO;
@@ -44,6 +48,29 @@ public class CategoryController {
 			return ResponseEntity.noContent().build();
 		
 		return new ResponseEntity<>(categories, HttpStatus.OK);
+	}
+	
+	
+//	Create a method to get the category:
+	@GetMapping("/{cid}")
+	public ResponseEntity<?> getCategoryById(@PathVariable Integer cid) {
+		CategoryResponse categoryResponse = categoryService.getCategoryById(cid);
+		
+		if(ObjectUtils.isEmpty(categoryResponse))
+			return new ResponseEntity<>("No category found with id [" + cid + "]", HttpStatus.NOT_FOUND);
+		
+		return new ResponseEntity<>(categoryResponse, HttpStatus.OK);
+	}
+	
+//	Create a method to delete the category:
+	@DeleteMapping("/{cid}")
+	public ResponseEntity<?> deleteCategory(@PathVariable Integer cid) {
+		Boolean deleteCategory = categoryService.deleteCategory(cid);
+		
+		if(deleteCategory)
+			return new ResponseEntity<>("Category Deleted Successfully!", HttpStatus.OK);
+		
+		return new ResponseEntity<>("Failed to delete category!", HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
 }
