@@ -11,7 +11,10 @@ import org.springframework.util.ObjectUtils;
 import com.project.dto.CategoryDTO;
 import com.project.dto.CategoryResponse;
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
+=======
+>>>>>>> Stashed changes
 import com.project.exception.ExistDataException;
 import com.project.exception.ResourceNotFoundException;
 >>>>>>> Stashed changes
@@ -39,6 +42,9 @@ public class CategoryServiceImpl implements CategoryService {
 		if(status) 
 			throw new ExistDataException("Category with title [" + categoryDTO.getTitle() +"] already exists!");
 		
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 		Category category = modelMapper.map(categoryDTO, Category.class);
 		Category saveCategory = categoryRepository.save(category);
