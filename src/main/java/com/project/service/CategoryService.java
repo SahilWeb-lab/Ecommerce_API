@@ -13,4 +13,11 @@ public interface CategoryService {
 //	Create a method to get all the categories: ACTIVE & IN ACTIVE BOTH:
 	public List<CategoryResponse> getAllCategories();
 	
+	
+//	Create a method to get the category by id:
+	public CategoryResponse getCategoryById(Integer categoryId);
+	
+//	Create a method to delete the category by id:
+	public Boolean deleteCategory(Integer categoryId);
+	
 }

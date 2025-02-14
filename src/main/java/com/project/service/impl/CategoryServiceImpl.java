@@ -43,4 +43,17 @@ public class CategoryServiceImpl implements CategoryService {
 		return categoryResponse;
 	}
 
+	@Override
+	public CategoryResponse getCategoryById(Integer categoryId) {
+		Category category = categoryRepository.findById(categoryId).get();
+		CategoryResponse categoryResponse = modelMapper.map(category, CategoryResponse.class);
+		return categoryResponse;
+	}
+
+	@Override
+	public Boolean deleteCategory(Integer categoryId) {
+		categoryRepository.deleteById(categoryId);
+		return true;
+	}
+
 }
